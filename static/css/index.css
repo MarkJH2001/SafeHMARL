@@ -1,0 +1,290 @@
+:root {
+  --ink: #17324d;
+  --muted: #5f6f7c;
+  --line: #dce3e8;
+  --teal: #167c80;
+  --gold: #d99a22;
+  --coral: #c95f48;
+  --light: #f5f7f8;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #202a32;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.navbar {
+  border-bottom: 1px solid #edf0f2;
+  box-shadow: none;
+}
+
+.project-mark {
+  color: var(--ink);
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;
+}
+
+.project-mark .icon {
+  color: var(--teal);
+  margin-right: 0.3rem;
+}
+
+.publication-header .hero-body {
+  padding-bottom: 2.5rem;
+  padding-top: 3.5rem;
+}
+
+.method-name {
+  color: var(--teal);
+  font-family: 'Google Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.publication-title,
+.publication-authors,
+.teaser,
+.title {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title {
+  color: var(--ink);
+  font-size: 2.65rem !important;
+  line-height: 1.14;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1050px;
+}
+
+.publication-authors {
+  margin-top: 0.75rem;
+}
+
+.publication-authors a {
+  color: #1685c1 !important;
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.affiliation {
+  color: var(--muted);
+  font-size: 1.05rem !important;
+  margin-top: 0.35rem;
+}
+
+.publication-links {
+  margin-top: 1.35rem;
+}
+
+.link-block a {
+  margin: 0.25rem 0.14rem;
+}
+
+.teaser .hero-body {
+  padding-bottom: 3.25rem;
+  padding-top: 0;
+}
+
+.publication-video {
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  width: 100%;
+}
+
+.publication-video video {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.native-video {
+  border: 1px solid #222;
+  border-radius: 6px;
+}
+
+.teaser-caption {
+  color: #34454f;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 1.35rem auto 0.35rem;
+  max-width: 880px;
+}
+
+.media-note {
+  color: var(--muted);
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.9rem;
+}
+
+.section {
+  padding-bottom: 4rem;
+  padding-top: 4rem;
+}
+
+.section.is-light,
+.method-band.is-light {
+  background: var(--light);
+}
+
+.section-intro {
+  margin: 0 auto 1.8rem;
+  max-width: 850px;
+}
+
+.paper-figure {
+  margin: 1.25rem auto 0;
+}
+
+.paper-figure img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-height: 720px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.overview-figure img {
+  max-height: none;
+}
+
+.compact-figure img {
+  max-width: 760px;
+}
+
+.simulation-figure img {
+  border: 1px solid #20262b;
+  border-radius: 4px;
+  max-width: 900px;
+}
+
+.method-row {
+  min-height: 420px;
+}
+
+.method-copy {
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+}
+
+.section-index {
+  color: var(--teal);
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
+.result-row {
+  margin-top: 1.15rem;
+}
+
+.result-figure {
+  height: 100%;
+  margin: 0;
+}
+
+.result-figure img {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  display: block;
+  width: 100%;
+}
+
+.result-figure figcaption {
+  color: #41515c;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.75rem 0.25rem 0;
+  text-align: left;
+}
+
+.bibtex-heading {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bibtex-heading .title {
+  margin-bottom: 1.25rem;
+}
+
+pre {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: 'Castoro', serif;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.footer {
+  background: #f2f4f5;
+  color: #485761;
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+}
+
+.footer a {
+  color: #1676a6;
+}
+
+@media screen and (max-width: 768px) {
+  .publication-header .hero-body {
+    padding-top: 2.25rem;
+  }
+
+  .publication-title {
+    font-size: 2rem !important;
+    line-height: 1.2;
+  }
+
+  .section {
+    padding-bottom: 3rem;
+    padding-top: 3rem;
+  }
+
+  .method-row {
+    min-height: 0;
+  }
+
+  .method-copy {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+
+  .reverse-mobile {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .teaser-caption {
+    font-size: 1.05rem;
+  }
+
+  .media-note {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

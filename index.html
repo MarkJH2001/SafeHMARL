@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="SafeHMARL combines graph-based task allocation, Safe-MAPPO SE(3) control, and CBF/HOCBF safety filters for multi-spacecraft close-proximity inspection.">
+  <meta name="keywords" content="SafeHMARL, multi-agent reinforcement learning, spacecraft inspection, control barrier functions, MuJoCo, JAX">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="SafeHMARL for Multi-Spacecraft Close-Proximity Inspection">
+  <meta property="og:description" content="Graph-based safe hierarchical MARL for coordinated full-pose spacecraft inspection.">
+  <meta property="og:url" content="https://markjh2001.github.io/SafeHMARL/">
+  <meta property="og:image" content="https://markjh2001.github.io/SafeHMARL/static/images/gateway_setup.png">
+  <title>SafeHMARL: Multi-Spacecraft Close-Proximity Inspection</title>
+
+  <link rel="canonical" href="https://markjh2001.github.io/SafeHMARL/">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Project navigation">
+    <div class="container is-max-desktop">
+      <div class="navbar-brand">
+        <a class="navbar-item project-mark" href="#top" aria-label="SafeHMARL home">
+          <span class="icon"><i class="fas fa-satellite"></i></span>
+          <span>SafeHMARL</span>
+        </a>
+        <button class="navbar-burger" type="button" aria-label="Open navigation" aria-expanded="false" data-target="project-navigation">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div id="project-navigation" class="navbar-menu">
+        <div class="navbar-end">
+          <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#demo">Demo</a>
+          <a class="navbar-item" href="#results">Results</a>
+          <a class="navbar-item" href="#bibtex">BibTeX</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero publication-header">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <p class="method-name">SafeHMARL</p>
+              <h1 class="title is-1 publication-title">Graph-Based Safe Hierarchical Multi-Agent Reinforcement Learning for Multi-Spacecraft Close-Proximity Inspection</h1>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"><a href="mailto:hjh-2001@sjtu.edu.cn">Junhao Hou</a>,</span>
+                <span class="author-block"><a href="mailto:qiangshen@sjtu.edu.cn">Qiang Shen</a></span>
+              </div>
+              <div class="is-size-5 publication-authors affiliation">
+                <span class="author-block">School of Aeronautics and Astronautics, Shanghai Jiao Tong University</span>
+              </div>
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="./static/pdfs/SafeHMARL.pdf" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#demo" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-play"></i></span>
+                    <span>Demo</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#bibtex" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-quote-right"></i></span>
+                    <span>BibTeX</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <div class="publication-video native-video">
+            <video id="teaser-video" autoplay muted loop controls playsinline preload="metadata" poster="./static/images/safehmarl_demo_poster.png">
+              <source src="./static/videos/safehmarl_demo.mp4" type="video/mp4">
+              This browser does not support embedded MP4 video.
+            </video>
+          </div>
+          <h2 class="subtitle has-text-centered teaser-caption">Three inspector spacecraft complete all eight surface-viewpoint tasks while maintaining collision-free motion and target-facing sensor pointing.</h2>
+          <p class="media-note has-text-centered">Direct 1920 × 1080 MuJoCo replay · 8/8 targets · minimum inter-inspector separation 7.05 m · no contact</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="abstract">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>Close-proximity inspection of geometrically complex space stations requires multiple inspector spacecraft to coordinate target allocation and execute six-degree-of-freedom maneuvers while satisfying collision-avoidance and surface-pointing constraints.</p>
+              <p>SafeHMARL links graph-based inspector-target allocation to goal-conditioned Safe-MAPPO control on SE(3). Each selected target conditions a shared decentralized full-pose policy, while CBF/HOCBF quadratic programs filter nominal commands for station clearance, inter-inspector separation, and surface pointing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method-overview" id="method">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">Safe Hierarchical Inspection</h2>
+            <div class="content has-text-justified section-intro">
+              <p>The high-level graph policy first selects nonduplicate surface tasks, the decentralized low-level actor produces full-pose control inputs, and the CBF/HOCBF layer filters those inputs before closed-loop propagation and MuJoCo contact validation.</p>
+            </div>
+            <figure class="paper-figure overview-figure">
+              <img src="./static/images/method_overview.svg" alt="Overview of graph task allocation, Safe-MAPPO execution, CBF and HOCBF projection, and safe closed-loop inspection.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section is-light method-band">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered is-vcentered method-row">
+          <div class="column is-5 method-copy">
+            <p class="section-index">High level</p>
+            <h2 class="title is-3">Graph Task Allocation</h2>
+            <div class="content has-text-justified">
+              <p>A dense inspector-target bipartite graph represents spacecraft states, task geometry, path clearance, and completion status. Message passing adds team context to each edge utility, while a masked decoder samples unique open targets without heuristic labels or behavior cloning.</p>
+            </div>
+          </div>
+          <div class="column is-7">
+            <figure class="paper-figure">
+              <img src="./static/images/gnn_allocator.svg" alt="GNN task allocator with inspector-target graph, context fusion, score matrix, and masked assignment decoder.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method-band">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered is-vcentered method-row reverse-mobile">
+          <div class="column is-7">
+            <figure class="paper-figure">
+              <img src="./static/images/safe_mappo.svg" alt="Safe-MAPPO architecture showing decentralized execution and centralized training.">
+            </figure>
+          </div>
+          <div class="column is-5 method-copy">
+            <p class="section-index">Low level</p>
+            <h2 class="title is-3">Safe-MAPPO SE(3) Control</h2>
+            <div class="content has-text-justified">
+              <p>A shared decentralized actor maps each local goal-conditioned observation to translational acceleration and body torque. Centralized reward and safety-cost critics train the actor with a safety-aware advantage, while execution remains decentralized across inspector spacecraft.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section is-light method-band">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered is-vcentered method-row">
+          <div class="column is-5 method-copy">
+            <p class="section-index">Safety layer</p>
+            <h2 class="title is-3">CBF/HOCBF Projection</h2>
+            <div class="content has-text-justified">
+              <p>Capsule and oriented bounding-box primitives approximate the Gateway keep-out geometry. Translational CBFs enforce station clearance and pairwise separation, and a rotational HOCBF constrains the sensor axis toward the assigned surface during inspection.</p>
+            </div>
+          </div>
+          <div class="column is-7">
+            <figure class="paper-figure compact-figure">
+              <img src="./static/images/cbf_geometry.svg" alt="Signed-distance construction for capsule and oriented bounding-box station primitives.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="simulation">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">MuJoCo Gateway Environment</h2>
+            <div class="content has-text-justified section-intro">
+              <p>The Lunar Gateway model provides a heterogeneous station-scale inspection scene with pressurized modules, solar arrays, and distributed viewpoints. Colored trajectories identify the three inspectors, green markers denote open targets, red markers denote completed targets, and translucent yellow cones visualize the sensor axes.</p>
+            </div>
+            <figure class="paper-figure simulation-figure">
+              <img src="./static/images/gateway_setup.png" alt="MuJoCo Lunar Gateway inspection scene with three inspector spacecraft, target markers, sensor cones, and trajectories.">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section is-light" id="results">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full-width">
+            <h2 class="title is-3">Training and Closed-Loop Results</h2>
+            <div class="content has-text-justified section-intro">
+              <p>The evaluation separates high-level relational learning, low-level safety-aware control, and execution-time filtering. Curves report independent training seeds and matched closed-loop evaluations under common target sets and initial conditions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered result-row">
+          <div class="column is-6">
+            <figure class="result-figure">
+              <img src="./static/images/allocator_training.svg" alt="Training curves for GNN and MLP task allocators.">
+              <figcaption><strong>Allocator learning.</strong> Current-policy success and held-out score across independent seeds.</figcaption>
+            </figure>
+          </div>
+          <div class="column is-6">
+            <figure class="result-figure">
+              <img src="./static/images/overall_performance.svg" alt="Mission progress and safety metrics for the complete SafeHMARL framework.">
+              <figcaption><strong>Closed-loop behavior.</strong> Coverage events, pointing error, barrier margins, and filter intervention.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="columns is-centered result-row">
+          <div class="column is-6">
+            <figure class="result-figure">
+              <img src="./static/images/allocator_comparison.svg" alt="Matched Random, MLP, and GNN task allocation comparison.">
+              <figcaption><strong>Task allocation.</strong> The GNN improves mean mission success and training consistency over learned MLP allocators.</figcaption>
+            </figure>
+          </div>
+          <div class="column is-6">
+            <figure class="result-figure">
+              <img src="./static/images/controller_comparison.svg" alt="Matched MAPPO and Safe-MAPPO controller comparison.">
+              <figcaption><strong>Low-level control.</strong> Safe-MAPPO improves pointing satisfaction and reduces rotational safety corrections.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="columns is-centered result-row">
+          <div class="column is-6">
+            <figure class="result-figure">
+              <img src="./static/images/constraint_curves.svg" alt="Time histories of station clearance, pairwise separation, pointing error, and safety corrections.">
+              <figcaption><strong>Constraint histories.</strong> Translational and rotational filters intervene near their respective boundaries.</figcaption>
+            </figure>
+          </div>
+          <div class="column is-6">
+            <figure class="result-figure">
+              <img src="./static/images/safety_ablation.svg" alt="Safety-filter ablation with contact and barrier-margin outcomes.">
+              <figcaption><strong>Safety ablation.</strong> Removing execution filters produces station penetration, close approaches, and MuJoCo contacts.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="bibtex">
+      <div class="container is-max-desktop content">
+        <div class="bibtex-heading">
+          <h2 class="title is-3">BibTeX</h2>
+          <button id="copy-bibtex" class="button is-small is-light" type="button" title="Copy BibTeX citation">
+            <span class="icon"><i class="fas fa-copy"></i></span>
+            <span>Copy</span>
+          </button>
+        </div>
+        <pre><code id="bibtex-code">@misc{hou2026safehmarl,
+  author = {Hou, Junhao and Shen, Qiang},
+  title  = {Graph-Based Safe Hierarchical Multi-Agent Reinforcement Learning for Multi-Spacecraft Close-Proximity Inspection},
+  year   = {2026},
+  note   = {Manuscript}
+}</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>SafeHMARL project page · Shanghai Jiao Tong University</p>
+            <p>This website is adapted from the <a href="https://nerfies.github.io/">Nerfies project page</a> and is available under the <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
